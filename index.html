@@ -1,0 +1,34 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Interfaz UBPD</title>
+  </head>
+  <body>
+    <h1>Clasificador de Relatos UBPD</h1>
+    <textarea id="texto" placeholder="Ingresa un relato aquí..."></textarea>
+    <button onclick="clasificarTexto()">Clasificar</button>
+    <div id="resultado"></div>
+
+    <script>
+      function clasificarTexto() {
+        const texto = document.getElementById("texto").value;
+        fetch("http://localhost:3000/clasificar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ texto }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById(
+              "resultado"
+            ).innerText = `Relacionado: ${data.relacionado}`;
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
+  </body>
+</html>
